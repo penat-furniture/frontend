@@ -225,28 +225,56 @@ const MainFooterFrameRoot = styled.section`
   }
 `;
 
+const default_limits = {
+  'bed': {
+    'min': 0,
+    'max': 1e10,
+  },
+  'chair': {
+    'min': 0,
+    'max': 1e10,
+  },
+  'closet': {
+    'min': 0,
+    'max': 1e10,
+  },
+  'couch': {
+    'min': 0,
+    'max': 1e10,
+  },
+  'dining_table': {
+    'min': 0,
+    'max': 1e10,
+  },
+  'potted_plant': {
+    'min': 0,
+    'max': 1e10,
+  },
+}
+
 const MainFooterFrame = () => {
   const [images, setImages] = useState({});
+  const [total, setTotal] = useState(null);
   const [loading, setLoading] = useState(true);
-  const [limits, setLimits] = useState({});
+  const [limits, setLimits] = useState(default_limits);
   const [limitsDump, setLimitsDump] = useState("");
   const image = new URLSearchParams(window.location.search).get("image");
-  useEffect(() => {
-    api.get("limits/").then((response) => {
-      if (response.data) {
-        const data = response.data || {};
-        setLimits(data);
-      }
-    });
-  }, []);
+  // useEffect(() => {
+  //   api.get("limits/").then((response) => {
+  //     if (response.data) {
+  //       const data = response.data || {};
+  //       setLimits(data);
+  //     }
+  //   });
+  // }, []);
   useEffect(() => {
     console.log({ limits });
     if (
       !limits?.chair ||
-      !limits?.table ||
+      !limits?.dining_table ||
       !limits?.bed ||
       !limits?.couch ||
-      !limits?.plant
+      !limits?.potted_plant
     ) {
       return;
     }
@@ -263,9 +291,10 @@ const MainFooterFrame = () => {
         if (response.data) {
           const data = response.data?.images || {};
           setImages(data);
-          console.log(data);
+          const prices = Object.values(data).map((item) => parseFloat(item.price || 0));
           setLoading(false);
           setLimitsDump(JSON.stringify(limits));
+          setTotal(prices.reduce((a, b) => a + b, 0).toFixed(0));
         }
       })
       .catch((error) => {
@@ -316,7 +345,7 @@ const MainFooterFrame = () => {
         <CircleButtonInstance>
           <TextYourRoom>
             <H>Ваша комната собрана!</H>
-            <DivText>Суммарная стоимость комнаты: n рублей</DivText>
+            {total !== null && <DivText>Суммарная стоимость комнаты: {total} руб.</DivText>}
           </TextYourRoom>
           {loading && (
             <div>
@@ -335,8 +364,8 @@ const MainFooterFrame = () => {
               />
               <OOfferItem
                 prop="Стол"
-                propId="table"
-                aImage={images?.table}
+                propId="dining_table"
+                aImage={images?.dining_table}
                 onMinMaxUpdate={onMinMaxUpdate}
               />
               <OOfferItem
@@ -353,8 +382,8 @@ const MainFooterFrame = () => {
               />
               <OOfferItem
                 prop="Растение"
-                propId="plant"
-                aImage={images?.plant}
+                propId="potted_plant"
+                aImage={images?.potted_plant}
                 onMinMaxUpdate={onMinMaxUpdate}
               />
             </TOfferSet>
