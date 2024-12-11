@@ -59,7 +59,7 @@ const ASecondarySave = styled.button`
 `;
 const OOfferItemRoot = styled.div`
     align-self: stretch;
-    width: 235px;
+    width: 13.9vw;
     flex-shrink: 0;
     display: flex;
     flex-direction: column;
@@ -83,6 +83,10 @@ const SelectMainArea = styled.div`
     align-items: center;
     justify-content: flex-start;
     gap: 5px;
+    @media screen and (max-width: 450px) {
+        
+        gap: 3px;
+    }
 `;
 const SelectArea = styled.div`
     width: 100%;
@@ -92,12 +96,13 @@ const SelectArea = styled.div`
     justify-content: flex-start;
     gap: 5px;
     @media screen and (max-width: 450px) {
-        flex-direction: column;
+        flex-direction: row;
+        gap: 3px;
     }
 `;
 const Select = styled.div`
     width: 95%;
-    font-size: 14px;
+    font-size: 12px;
     padding-top: 10px;
     padding-bottom: 10px;
     align-items: center;
@@ -108,13 +113,16 @@ const Select = styled.div`
     cursor: pointer;
 
     :hover {
-        background-color: #29292b;
+        background-color: #5a6a59;
         color: #ffffff;
     }
 
     &.selected {
-        background-color: #29292b;
+        background-color: #5a6a59;
         color: #ffffff;
+    }
+        @media screen and (max-width: 450px) {
+        font-size: 11px;
     }
 `;
 

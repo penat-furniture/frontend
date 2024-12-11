@@ -119,13 +119,13 @@ const OOfferItem1 = styled.div`
   }
 `;
 const TOfferSet = styled.div`
-  width: 1253px;
+  width: 90vw;
   flex: 1;
   overflow-x: auto;
   display: flex;
   flex-direction: row;
   align-items: flex-start;
-  justify-content: flex-start;
+  justify-content: center;
   padding: 0px var(--padding-7xs) 0px 0px;
   box-sizing: border-box;
   gap: 0px 18px;
@@ -133,13 +133,14 @@ const TOfferSet = styled.div`
   font-size: var(--footer-size);
   font-family: var(--footer);
   @media screen and (max-width: 450px) {
+    width: 100vw;
     flex-direction: ;
     flex-wrap: wrap;
     align-items: center;
     justify-content: left;
     gap: 32px 10px;
-    padding-left: 20px;
-    padding-right: 20px;
+    padding-left: 14px;
+    padding-right: 14px;
   }
 `;
 const CircleButtonInstance = styled.div`
@@ -207,7 +208,7 @@ const RestartButton1 = styled.div`
   }
 `;
 const MainFooterFrameRoot = styled.section`
-  height: 823px;
+  
   display: flex;
   flex-direction: row;
   align-items: flex-start;
@@ -220,7 +221,7 @@ const MainFooterFrameRoot = styled.section`
   color: var(--main-black);
   font-family: var(--header);
   @media screen and (max-width: 450px) {
-    height: 1720px;
+    
     padding: 0px;
   }
 `;
@@ -381,12 +382,20 @@ const MainFooterFrame = () => {
                 onMinMaxUpdate={onMinMaxUpdate}
               />
               <OOfferItem
+                prop="Шкаф"
+                propId="closet"
+                aImage={images?.closet}
+                onMinMaxUpdate={onMinMaxUpdate}
+              />
+              <OOfferItem
                 prop="Растение"
                 propId="potted_plant"
                 aImage={images?.potted_plant}
                 onMinMaxUpdate={onMinMaxUpdate}
               />
             </TOfferSet>
+            
+            
           )}
         </CircleButtonInstance>
         <RestartButton onClick={onText4Click}>

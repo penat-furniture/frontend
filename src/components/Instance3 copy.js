@@ -44,7 +44,6 @@ const SortIcon = styled.div`
   max-width: 100%;
   @media screen and (max-width: 450px) {
     gap: 16px;
-    width: 100%;
   }
 `;
 const UnionFrame = styled.div`
@@ -52,9 +51,9 @@ const UnionFrame = styled.div`
   flex-direction: row;
   align-items: flex-start;
   justify-content: flex-start;
-  width: 90%;
+  padding: 0px var(--padding-4xl) var(--padding-8xs) var(--padding-xl);
   box-sizing: border-box;
- 
+  max-width: 100%;
   font-family: var(--header);
 `;
 const Div1 = styled.div`
@@ -204,32 +203,21 @@ const ProgressBarInstance = styled.div`
   }
 `;
 const AImageIcon = styled.img`
-  
-  
-  width: 90%;
+  position: relative;
+  max-width: 100%;
   overflow: hidden;
-  
+  border-top-right-radius: 60px;
+  border-bottom-left-radius: 60px;
+  max-height: 100%;
   object-fit: contain;
   background-color: #ffffff;
-  
+  min-height: 450px;
   cursor: pointer;
   @media screen and (max-width: 450px) {
-    
-  }
-`;
-const Photoarea = styled.div`
-  width: 60%;
-  display: flex;
-  gap: 20px;
-  @media screen and (max-width: 450px) {
-    width: 90%;
-  }
-`;
-const Shape = styled.img`
-  width: 22%;
-  cursor: pointer;
-  @media screen and (max-width: 450px) {
-    display: none;
+    width: 100%;
+    min-height: 260px;
+    border-top-right-radius: 40px;
+    border-bottom-left-radius: 40px;
   }
 `;
 const AImageParent = styled.div`
@@ -274,35 +262,12 @@ const ImageContainer = styled.div`
   box-sizing: border-box;
   max-width: 100%;
 `;
-const Button1 = styled.div`
-  display: flex;
-  background: #EDEAE5;
-  border: solid 2px #29292B;
-  color: #29292B;
-  width: 200px;
-  font-family: Inter;
-  font-size: 22px;
-  padding-top: 15px;
-  padding-bottom: 15px;
-  padding-left: 15px;
-  padding-right: 15px;
-  border-radius: 10px;
-  margin-top: 15px;
-  margin-bottom: 15px;
-  cursor: pointer;
-  justify-content: center;
-  @media screen and (max-width: 450px) {
-    font-size: 18px;
-  }
-
-}
-`;
 const UnionFrameParent = styled.div`
   flex: 1;
   display: flex;
-  flex-direction: row;
+  flex-direction: column;
   align-items: center;
-  justify-content: space-around;
+  justify-content: flex-start;
   gap: 40px 0px;
   max-width: 100%;
   @media screen and (max-width: 750px) {
@@ -313,21 +278,22 @@ const UnionFrameParent = styled.div`
   }
 `;
 const InstanceRoot = styled.section`
-  width: 100%;
+  width: 1255px;
   display: flex;
   flex-direction: row;
   align-items: flex-start;
   justify-content: flex-start;
-  
+  padding: 0px 0px var(--padding-smi) var(--padding-8xs);
   box-sizing: border-box;
-  
+  max-width: 96%;
   flex-shrink: 0;
   text-align: center;
   font-size: var(--header-size);
   color: var(--main-black);
   font-family: var(--footer);
 `;
-const Instance2 = () => {
+
+const Instance3 = () => {
   const [images, setImages] = useState([]);
   const [loading, setLoading] = useState(true);
   const split_by = 4;
@@ -335,7 +301,7 @@ const Instance2 = () => {
   useEffect(() => {
     api
       .post("suggest/", {
-        step: "2",
+        step: "3",
         image: image,
       })
       .then((response) => {
@@ -372,8 +338,8 @@ const Instance2 = () => {
 
   const onText4Click = useCallback(
     (name) => {
-      navigate(`/step/3/?image=${name}`);
-      console.log("Выбор №2");
+      navigate(`/room/done/?image=${name}`);
+      console.log("Выбор №3");
       console.log(name);
     },
     [navigate]
@@ -382,31 +348,68 @@ const Instance2 = () => {
   return (
     <InstanceRoot>
       <UnionFrameParent>
-      <Shape loading="lazy" alt="" src="/shape1.png"></Shape>
         <UnionFrame>
           <SortIcon>
-            <H>Какой нравится больше всего?</H>
-            <Photoarea>
-            <AImageIcon loading="lazy" alt="" src="/a-image-1@2x.png" onClick={onText4Click}></AImageIcon>
-            <AImageIcon loading="lazy" alt="" src="/a-image-1@2x.png" onClick={onText4Click}></AImageIcon>
-            </Photoarea>
-            <Photoarea>
-            <AImageIcon loading="lazy" alt="" src="/a-image-1@2x.png" onClick={onText4Click}></AImageIcon>
-            <AImageIcon loading="lazy" alt="" src="/a-image-1@2x.png" onClick={onText4Click}></AImageIcon>
-            </Photoarea>
-            <Button1 onClick={onText4Click}>
-            Никакой!
-          </Button1>
-          <AProgressBarChild loading="lazy" alt="" src="/progres1.png" />
+            <H>Я хочу найти что-то похожее на...</H>
+            <PhotoDisplay>
+              <Div>Выберите одно фото</Div>
+            </PhotoDisplay>
           </SortIcon>
         </UnionFrame>
-        <Shape loading="lazy" alt="" src="/shape2.png"></Shape>
-        
+        <SortingMenu>
+          <MenuItemIcon>
+            <NestedMenus>
+              {/* <OSort>
+                <Div1>Сортировать</Div1>
+                <AIconSort loading="lazy" alt="" src="/a-icon-sort@2x.png" />
+              </OSort> */}
+            </NestedMenus>
+            {/* <MSecondaryPhotoResearch>
+              <AIconSort alt="" src="/a-icon-camera@2x.png" />
+              <Div2>Поиск по фото</Div2>
+            </MSecondaryPhotoResearch> */}
+          </MenuItemIcon>
+        </SortingMenu>
 
-        
+        {loading && (
+          <div>
+            Почти всё готово (ждём ответа домового). Закройте глаза на несколько
+            секунд
+          </div>
+        )}
+        {!loading && images.length === 0 && <div>No images</div>}
+        {!loading && images.length > 0 && (
+          <ImageContainer>
+            <MImages>
+              {images &&
+                images.map((image, index) => (
+                  <AImageParent>
+                    {image.map((img, i) => (
+                      <AImageIcon
+                        loading="lazy"
+                        alt=""
+                        src={img.image}
+                        onClick={onText4Click.bind(null, img.name)}
+                      ></AImageIcon>
+                    ))}
+                  </AImageParent>
+                ))}
+            </MImages>
+          </ImageContainer>
+        )}
+        <ProgressBarInstance>
+          <AProgressBar>
+            {/* <Parent1>
+              <Div3>1 шаг</Div3>
+              <Div4>2 шаг</Div4>
+              <Div4>3 шаг</Div4>
+            </Parent1> */}
+            <AProgressBarChild loading="lazy" alt="" src="/Frame18.png" />
+          </AProgressBar>
+        </ProgressBarInstance>
       </UnionFrameParent>
     </InstanceRoot>
   );
 };
 
-export default Instance2;
+export default Instance3;

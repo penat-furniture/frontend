@@ -327,7 +327,7 @@ const InstanceRoot = styled.section`
   color: var(--main-black);
   font-family: var(--footer);
 `;
-const Instance2 = () => {
+const Instance4 = () => {
   const [images, setImages] = useState([]);
   const [loading, setLoading] = useState(true);
   const split_by = 4;
@@ -372,8 +372,8 @@ const Instance2 = () => {
 
   const onText4Click = useCallback(
     (name) => {
-      navigate(`/step/3/?image=${name}`);
-      console.log("Выбор №2");
+      navigate(`/step/5/?image=${name}`);
+      console.log("Выбор №4");
       console.log(name);
     },
     [navigate]
@@ -397,7 +397,7 @@ const Instance2 = () => {
             <Button1 onClick={onText4Click}>
             Никакой!
           </Button1>
-          <AProgressBarChild loading="lazy" alt="" src="/progres1.png" />
+          <AProgressBarChild loading="lazy" alt="" src="/progres3.png" />
           </SortIcon>
         </UnionFrame>
         <Shape loading="lazy" alt="" src="/shape2.png"></Shape>
@@ -409,4 +409,4 @@ const Instance2 = () => {
   );
 };
 
-export default Instance2;
+export default Instance4;

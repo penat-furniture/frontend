@@ -171,7 +171,7 @@ const DivRoot = styled.div`
   justify-content: flex-start;
   padding: 0px 0px var(--padding-12xs);
   box-sizing: border-box;
-  gap: 86px 0px;
+  gap: 36px 0px;
   letter-spacing: normal;
   @media screen and (max-width: 750px) {
     gap: 86px 0px;

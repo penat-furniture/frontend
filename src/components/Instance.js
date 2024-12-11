@@ -3,6 +3,11 @@ import { useCallback, useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import api from "../utils/api";
 import { split_by_chunks } from "../utils/helpers";
+import React from 'react';
+import Popup from 'reactjs-popup';
+import 'reactjs-popup/dist/index.css';
+
+
 
 const H = styled.h1`
   margin: 0;
@@ -10,7 +15,7 @@ const H = styled.h1`
   font-size: inherit;
   font-weight: 300;
   font-family: inherit;
-  text-align: justify;
+  text-align: center;
   @media screen and (max-width: 1050px) {
     font-size: var(--font-size-10xl);
   }
@@ -20,11 +25,28 @@ const H = styled.h1`
   }
 `;
 const Div = styled.div`
-  position: relative;
+  text-align: center;
   font-weight: 400;
-  font-size: 18px;
+  font-size: 32px;
+  font-weight: 300;
+  font-family: Literata;
   @media screen and (max-width: 450px) {
-    color: #808080;
+    color: #29292b;
+    font-size: 24px;
+  }
+`;
+const Div5 = styled.div`
+  text-align: center;
+  font-weight: 400;
+  font-size: 32px;
+  font-weight: 300;
+  font-family: Literata;
+  @media screen and (max-width: 450px) {
+    color: #29292b;
+    font-size: 18px;
+    background: white;
+    width: 100%;
+    
   }
 `;
 const PhotoDisplay = styled.div`
@@ -205,22 +227,152 @@ const ProgressBarInstance = styled.div`
 `;
 const AImageIcon = styled.img`
   position: relative;
-  border-top-right-radius: 60px;
-  border-bottom-left-radius: 60px;
+
   max-width: 100%;
   overflow: hidden;
   max-height: 100%;
   object-fit: contain;
-  background-color: #ffffff;
-  min-height: 450px;
+  border-radius: 20px;
+  
+  
+  @media screen and (max-width: 450px) {
+    width: 100%;
+    border-radius: 10px;
+  }
+  
+`;
+const Mainselectframe = styled.div`
+  display: flex;
+  width: 100%;
+  flex-direction: row;
+  gap: 20px;
+  justify-content: center;
+  @media screen and (max-width: 450px) {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+`;
+const Mainselect = styled.div`
+  display: flex;
+  width: 100%;
+  border: solid 1px black;
+  gap: 25px;
+  border-radius: 20px;
+  padding-top: 20px;
+  padding-bottom: 20px;
+  padding-left: 20px;
+  padding-right: 20px;
+  justify-content: center;
+  object-fit: fill;
+  background-color: #EDEAE5;
   cursor: pointer;
+  flex-direction: column;
+  @media screen and (max-width: 450px) {
+    width: 85%;
+    padding-top: 15px;
+  padding-bottom: 15px;
+  padding-left: 15px;
+  padding-right: 15px;
+  gap: 20px;
+  border-radius: 15px;
+  }
+    
+}
+`;
+const Modal = styled.div`
+  display: flex;
+  
+  gap: 30px;
+  
+  padding-top: 15px;
+  padding-bottom: 50px;
+  padding-left: 20px;
+  padding-right: 20px;
+  justify-content: right;
+  
+  
+  cursor: pointer;
+  flex-direction: column;
+  @media screen and (max-width: 450px) {
+    width: 100%;
+    padding-top: 0px;
+  padding-bottom: 0px;
+  padding-left: 0px;
+  padding-right: 0px;
+  gap: 30px;
+  align-items: center;
+  background-color: white;
+  }
+
+}
+`;
+const Close = styled.div`
+  display: flex;
+  justify-content: flex-end;
+  
+  
+
+  @media screen and (max-width: 450px) {
+    display: none;
+  }
+
+}
+`;
+const Button1 = styled.div`
+  display: flex;
+  background: #29292B;
+  width: 200px;
+  color: white;
+  font-family: Inter;
+  font-size: 22px;
+  padding-top: 10px;
+  padding-bottom: 10px;
+  padding-left: 22px;
+  padding-right: 15px;
+  border-radius: 10px;
+  cursor: pointer;
+  @media screen and (max-width: 450px) {
+    font-size: 18px;
+  }
+
+}
+`;
+const Buttonarea = styled.div`
+  display: flex;
+  width: 100%;
+  justify-content: center;
+  @media screen and (max-width: 450px) {
+    
+  }
+
+}
+`;
+const Popupcontent = styled.div`
+  display: flex;
+  width: 100%;
+  border: solid 1px black;
+  gap: 25px;
+  border-radius: 20px;
+  padding-top: 20px;
+  padding-bottom: 20px;
+  padding-left: 20px;
+  padding-right: 20px;
+  justify-content: center;
+  object-fit: fill;
+  background-color: #EDEAE5;
+  cursor: pointer;
+  flex-direction: column;
   @media screen and (max-width: 450px) {
     width: 100%;
     min-height: 270px;
     border-top-right-radius: 40px;
     border-bottom-left-radius: 40px;
   }
+}
 `;
+
 const AImageParent = styled.div`
   align-self: stretch;
   display: grid;
@@ -269,7 +421,7 @@ const UnionFrameParent = styled.div`
   flex-direction: column;
   align-items: center;
   justify-content: flex-start;
-  gap: 40px 0px;
+  gap: 60px 0px;
   max-width: 100%;
   @media screen and (max-width: 750px) {
     gap: 40px 0px;
@@ -284,7 +436,7 @@ const InstanceRoot = styled.section`
   flex-direction: row;
   align-items: flex-start;
   justify-content: flex-start;
-  padding: 0px 0px var(--padding-smi) var(--padding-8xs);
+  
   box-sizing: border-box;
   max-width: 96%;
   flex-shrink: 0;
@@ -294,9 +446,11 @@ const InstanceRoot = styled.section`
   font-family: var(--footer);
 `;
 
+
 // console.log(s);
 
 const Instance = () => {
+  
   const [images, setImages] = useState([]);
   const [loading, setLoading] = useState(true);
   const split_by = 4;
@@ -343,7 +497,8 @@ const Instance = () => {
       // console.log(event.target.src);
     },
     [navigate]
-  );
+  )
+  ;
 
   return (
     <InstanceRoot>
@@ -351,69 +506,106 @@ const Instance = () => {
         <UnionFrame>
           <SortIcon>
             <H>
-              Трижды выберите один стул, который вам нравится больше всего.
-              После каждого выбора страница обновляется – мы формируем ваш
-              профиль
+            Представьте, что вы пришли к дизайнеру, который может воплотить в жизнь любую вашу идею. С какой комнаты начнём?
             </H>
             <PhotoDisplay>
               <Div>
-                Всего на этом этапе 16 стульев, чтобы увидеть все, пролистайте
-                страницу
+                
               </Div>
             </PhotoDisplay>
           </SortIcon>
         </UnionFrame>
-        <SortingMenu>
-          <MenuItemIcon>
-            <NestedMenus>
-              {/* <OSort>
-                <Div1>Сортировать</Div1>
-                <AIconSort loading="lazy" alt="" src="/a-icon-sort@2x.png" />
-              </OSort> */}
-            </NestedMenus>
-            {/* <MSecondaryPhotoResearch>
-              <AIconSort alt="" src="/a-icon-camera@2x.png" />
-              <Div2>Поиск по фото</Div2>
-            </MSecondaryPhotoResearch> */}
-          </MenuItemIcon>
-        </SortingMenu>
+        
+        <Mainselectframe>
+         
+         <Popup
+    trigger={<Mainselect>
+      <Div>Кухня</Div>
+      <AImageIcon loading="lazy" alt="" src="/kitchen.png"></AImageIcon>
+      
+     </Mainselect>}
+    modal
+    nested
+  >
+    {close => (
+      <Modal>
+        <Close onClick={close}>
+          &times;
+        </Close>
+        <Div5> Пройдите “стильный” квиз, чтобы мы сделали рекомендацию именно для вас </Div5>
+        
+        
+        <Buttonarea>
+          
+          <Button1 onClick={onText4Click}>
+             Отлично, начнём!
+          </Button1>
+        </Buttonarea>
+      </Modal>
+    )}
+  </Popup>
 
-        {loading && (
-          <div>
-            Почти всё готово (ждём ответа домового). Закройте глаза на несколько
-            секунд
-          </div>
-        )}
-        {!loading && images.length === 0 && <div>No images</div>}
-        {!loading && images.length > 0 && (
-          <ImageContainer>
-            <MImages>
-              {images &&
-                images.map((image, index) => (
-                  <AImageParent>
-                    {image.map((img, i) => (
-                      <AImageIcon
-                        loading="lazy"
-                        alt=""
-                        src={img.image}
-                        onClick={onText4Click.bind(null, img.name)}
-                      ></AImageIcon>
-                    ))}
-                  </AImageParent>
-                ))}
-            </MImages>
-          </ImageContainer>
-        )}
-        <ProgressBarInstance>
-          <AProgressBar>
-            <Parent1>
-              <Div3>1 шаг</Div3>
-              <Div4>2 шаг</Div4>
-              <Div4>3 шаг</Div4>
-            </Parent1>
-            <AProgressBarChild loading="lazy" alt="" src="/group-907@2x.png" />
-          </AProgressBar>
-        </ProgressBarInstance>
+  <Popup
+    trigger={<Mainselect>
+      <Div>Гостиная</Div>
+      <AImageIcon loading="lazy" alt="" src="/livingroom.png"></AImageIcon>
+     </Mainselect>}
+    modal
+    nested
+  >
+    {close => (
+      <Modal>
+        <Close onClick={close}>
+          &times;
+        </Close>
+        <Div5> Пройдите “стильный” квиз, чтобы мы сделали рекомендацию именно для вас </Div5>
+        
+        
+        <Buttonarea>
+        <Button1 onClick={onText4Click}>
+             Отлично, начнём!
+          </Button1>
+        </Buttonarea>
+
+      </Modal>
+    )}
+  </Popup>
+
+  <Popup
+    trigger={<Mainselect>
+      <Div>Спальня</Div>
+      <AImageIcon loading="lazy" alt="" src="/bedroom.png"></AImageIcon>
+     </Mainselect>}
+    modal
+    nested
+  >
+    {close => (
+      <Modal>
+        <Close onClick={close}>
+          &times;
+        </Close>
+        <Div5> Пройдите “стильный” квиз, чтобы мы сделали рекомендацию именно для вас </Div5>
+        
+        
+        <Buttonarea>
+          
+        <Button1 onClick={onText4Click}>
+             Отлично, начнём!
+          </Button1>
+          </Buttonarea>
+      </Modal>
+    )}
+  </Popup>
+  
+         
+         
+        </Mainselectframe>
+        
+
+        
+        
+        
+
       </UnionFrameParent>
     </InstanceRoot>
   );

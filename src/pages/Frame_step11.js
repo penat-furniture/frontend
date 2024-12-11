@@ -1,7 +1,7 @@
 import { useCallback } from "react";
 import styled from "styled-components";
 import { useNavigate } from "react-router-dom";
-import Instance2 from "../components/Instance2";
+import Instance11 from "../components/Instance11";
 import AFooter from "../components/AFooter";
 
 const Child = styled.img`
@@ -233,7 +233,7 @@ const Frame = () => {
           </MMenuItems4>
         </OMenu>
       </TCap>
-      <Instance2 />
+      <Instance11 />
       <AFooter />
     </DivRoot>
   );
