@@ -218,8 +218,9 @@ const AImageIcon = styled.img`
   }
 `;
 const Photoarea = styled.div`
-  width: 60%;
+  width: 110%;
   display: flex;
+  z-index: 9999;
   gap: 20px;
   @media screen and (max-width: 450px) {
     width: 90%;
@@ -335,12 +336,14 @@ const Instance2 = () => {
   useEffect(() => {
     api
       .post("suggest/", {
-        step: "2",
+        step: "1",
         image: image,
       })
       .then((response) => {
         if (response.data) {
           const data = response.data?.images || [];
+          console.log("data");
+          console.log(data);
           const images = split_by_chunks(data, split_by);
           setImages(images);
           console.log(images);
@@ -380,32 +383,81 @@ const Instance2 = () => {
   );
 
   return (
+    // <InstanceRoot>
+    //   <UnionFrameParent>
+    //   <Shape loading="lazy" alt="" src="/shape1.png"></Shape>
+    //     <UnionFrame>
+    //       <SortIcon>
+    //         <H>Какой нравится больше всего?</H>
+    //         <Photoarea>
+    //         <AImageIcon loading="lazy" alt="" src="/a-image-1@2x.png" onClick={onText4Click}></AImageIcon>
+    //         <AImageIcon loading="lazy" alt="" src="/a-image-1@2x.png" onClick={onText4Click}></AImageIcon>
+    //         </Photoarea>
+    //         <Photoarea>
+    //         <AImageIcon loading="lazy" alt="" src="/a-image-1@2x.png" onClick={onText4Click}></AImageIcon>
+    //         <AImageIcon loading="lazy" alt="" src="/a-image-1@2x.png" onClick={onText4Click}></AImageIcon>
+    //         </Photoarea>
+    //         <Button1 onClick={onText4Click}>
+    //         Никакой!
+    //       </Button1>
+    //       <AProgressBarChild loading="lazy" alt="" src="/progres1.png" />
+    //       </SortIcon>
+    //     </UnionFrame>
+    //     <Shape loading="lazy" alt="" src="/shape2.png"></Shape>        
+    //   </UnionFrameParent>
+    // </InstanceRoot>
     <InstanceRoot>
-      <UnionFrameParent>
-      <Shape loading="lazy" alt="" src="/shape1.png"></Shape>
-        <UnionFrame>
-          <SortIcon>
-            <H>Какой нравится больше всего?</H>
-            <Photoarea>
-            <AImageIcon loading="lazy" alt="" src="/a-image-1@2x.png" onClick={onText4Click}></AImageIcon>
-            <AImageIcon loading="lazy" alt="" src="/a-image-1@2x.png" onClick={onText4Click}></AImageIcon>
-            </Photoarea>
-            <Photoarea>
-            <AImageIcon loading="lazy" alt="" src="/a-image-1@2x.png" onClick={onText4Click}></AImageIcon>
-            <AImageIcon loading="lazy" alt="" src="/a-image-1@2x.png" onClick={onText4Click}></AImageIcon>
-            </Photoarea>
-            <Button1 onClick={onText4Click}>
-            Никакой!
-          </Button1>
-          <AProgressBarChild loading="lazy" alt="" src="/progres1.png" />
-          </SortIcon>
-        </UnionFrame>
-        <Shape loading="lazy" alt="" src="/shape2.png"></Shape>
-        
+  <UnionFrameParent>
+    {/* Retain these shapes and their styling */}
+    <Shape loading="lazy" alt="" src="/shape1.png" />
+    <UnionFrame>
+      <SortIcon>
+        <H>Какой нравится больше всего?</H>
 
-        
-      </UnionFrameParent>
-    </InstanceRoot>
+        {/* Dynamically render photo areas based on your `images` data */}
+        {(!loading && images.length > 0) ? (
+          images.map((imageRow, rowIndex) => (
+            <Photoarea key={rowIndex}>
+              {imageRow.map((img, i) => (
+                <AImageIcon
+                  key={i}
+                  loading="lazy"
+                  alt={img.name || ""}
+                  src={img.image}
+                  onClick={() => onText4Click(img.name)}
+                />
+              ))}
+            </Photoarea>
+          ))
+        ) : (
+          // Handling loading and empty states:
+          loading ? (
+            <div>
+              Почти всё готово (ждём ответа домового). Закройте глаза на несколько секунд
+            </div>
+          ) : (
+            <div>No images</div>
+          )
+        )}
+
+        <Button1 onClick={onText4Click}>
+          Никакой!
+        </Button1>
+
+        {/* Progress bar can remain as is, just change the image if needed */}
+        <AProgressBarChild loading="lazy" alt="" src="/progres1.png" />
+      </SortIcon>
+    </UnionFrame>
+    <Shape loading="lazy" alt="" src="/shape2.png" />
+  </UnionFrameParent>
+</InstanceRoot>
+
+
+
+
+
+
+
   );
 };
 

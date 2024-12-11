@@ -335,7 +335,7 @@ const Instance11 = () => {
   useEffect(() => {
     api
       .post("suggest/", {
-        step: "2",
+        step: "6",
         image: image,
       })
       .then((response) => {

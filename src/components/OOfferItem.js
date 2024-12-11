@@ -163,7 +163,7 @@ const OOfferItem = ({ prop, propId, aImage, onMinMaxUpdate }) => {
     onMinMaxUpdate (min, max, propId)
   }
   const resolveLimitOptions = () => {
-    if (propId === 'potted_plant') {
+    if (propId === 'plant') {
       return [
         [
           { min: 0, max: 500 },

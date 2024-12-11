@@ -243,11 +243,11 @@ const default_limits = {
     'min': 0,
     'max': 1e10,
   },
-  'dining_table': {
+  'table': {
     'min': 0,
     'max': 1e10,
   },
-  'potted_plant': {
+  'plant': {
     'min': 0,
     'max': 1e10,
   },
@@ -272,10 +272,10 @@ const MainFooterFrame = () => {
     console.log({ limits });
     if (
       !limits?.chair ||
-      !limits?.dining_table ||
+      !limits?.table ||
       !limits?.bed ||
       !limits?.couch ||
-      !limits?.potted_plant
+      !limits?.plant
     ) {
       return;
     }
@@ -284,7 +284,7 @@ const MainFooterFrame = () => {
     }
     api
       .post("suggest/", {
-        step: "4",
+        step: "7",
         image,
         limits,
       })
@@ -365,8 +365,8 @@ const MainFooterFrame = () => {
               />
               <OOfferItem
                 prop="Стол"
-                propId="dining_table"
-                aImage={images?.dining_table}
+                propId="table"
+                aImage={images?.table}
                 onMinMaxUpdate={onMinMaxUpdate}
               />
               <OOfferItem
@@ -389,8 +389,8 @@ const MainFooterFrame = () => {
               />
               <OOfferItem
                 prop="Растение"
-                propId="potted_plant"
-                aImage={images?.potted_plant}
+                propId="plant"
+                aImage={images?.plant}
                 onMinMaxUpdate={onMinMaxUpdate}
               />
             </TOfferSet>
