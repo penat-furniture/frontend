@@ -3,6 +3,7 @@ import { useCallback, useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import api from "../utils/api";
 import { split_by_chunks } from "../utils/helpers";
+import React from 'react';
 
 const H = styled.h1`
   margin: 0;
@@ -50,8 +51,8 @@ const SortIcon = styled.div`
 const UnionFrame = styled.div`
   display: flex;
   flex-direction: row;
-  align-items: flex-start;
-  justify-content: flex-start;
+  align-items: сenter;
+  justify-content: center;
   width: 90%;
   box-sizing: border-box;
  
@@ -218,12 +219,22 @@ const AImageIcon = styled.img`
   }
 `;
 const Photoarea = styled.div`
-  width: 110%;
-  display: flex;
-  z-index: 9999;
-  gap: 20px;
+  align-self: stretch;
+  display: grid;
+  flex-direction: row;
+  align-items: flex-start;
+  justify-content: flex-start;
+  gap: 0px 21px;
+  grid-template-columns: repeat(2, minmax(223px, 1fr));
+  @media screen and (max-width: 1050px) {
+    justify-content: center;
+    grid-template-columns: repeat(2, minmax(223px, 386px));
+  }
   @media screen and (max-width: 450px) {
-    width: 90%;
+    // grid-template-columns: minmax(223px, 1fr);
+    justify-content: center;
+    grid-template-columns: repeat(2, minmax(23px, 450px));
+    gap: 10px 10px;
   }
 `;
 const Shape = styled.img`
@@ -329,15 +340,21 @@ const InstanceRoot = styled.section`
   font-family: var(--footer);
 `;
 const Instance2 = () => {
+  
   const [images, setImages] = useState([]);
   const [loading, setLoading] = useState(true);
-  const split_by = 4;
+  const split_by = 2;
   const image = new URLSearchParams(window.location.search).get("image");
+  const room = new URLSearchParams(window.location.search).get("room");
+  const refreshPage = ()=>{
+    window.location.reload();
+ }
   useEffect(() => {
     api
       .post("suggest/", {
         step: "1",
         image: image,
+        room: room,
       })
       .then((response) => {
         if (response.data) {
@@ -375,8 +392,8 @@ const Instance2 = () => {
 
   const onText4Click = useCallback(
     (name) => {
-      navigate(`/step/3/?image=${name}`);
-      console.log("Выбор №2");
+      navigate(`/step/3/?image=${name}&room=${room}`);
+      console.log("Выбор №1");
       console.log(name);
     },
     [navigate]
@@ -412,6 +429,7 @@ const Instance2 = () => {
     <Shape loading="lazy" alt="" src="/shape1.png" />
     <UnionFrame>
       <SortIcon>
+      
         <H>Какой нравится больше всего?</H>
 
         {/* Dynamically render photo areas based on your `images` data */}
@@ -440,7 +458,7 @@ const Instance2 = () => {
           )
         )}
 
-        <Button1 onClick={onText4Click}>
+        <Button1 onClick={refreshPage}>
           Никакой!
         </Button1>
 

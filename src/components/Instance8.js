@@ -50,8 +50,8 @@ const SortIcon = styled.div`
 const UnionFrame = styled.div`
   display: flex;
   flex-direction: row;
-  align-items: flex-start;
-  justify-content: flex-start;
+  align-items: сenter;
+  justify-content: center;
   width: 90%;
   box-sizing: border-box;
  
@@ -218,11 +218,22 @@ const AImageIcon = styled.img`
   }
 `;
 const Photoarea = styled.div`
-  width: 60%;
-  display: flex;
-  gap: 20px;
+  align-self: stretch;
+  display: grid;
+  flex-direction: row;
+  align-items: flex-start;
+  justify-content: flex-start;
+  gap: 0px 21px;
+  grid-template-columns: repeat(2, minmax(223px, 1fr));
+  @media screen and (max-width: 1050px) {
+    justify-content: center;
+    grid-template-columns: repeat(2, minmax(223px, 386px));
+  }
   @media screen and (max-width: 450px) {
-    width: 90%;
+    // grid-template-columns: minmax(223px, 1fr);
+    justify-content: center;
+    grid-template-columns: repeat(2, minmax(23px, 450px));
+    gap: 10px 10px;
   }
 `;
 const Shape = styled.img`
@@ -330,13 +341,18 @@ const InstanceRoot = styled.section`
 const Instance8 = () => {
   const [images, setImages] = useState([]);
   const [loading, setLoading] = useState(true);
-  const split_by = 4;
+  const split_by = 2;
   const image = new URLSearchParams(window.location.search).get("image");
+  const room = new URLSearchParams(window.location.search).get("room");;
+  const refreshPage = ()=>{
+    window.location.reload();
+ }
   useEffect(() => {
     api
       .post("suggest/", {
-        step: "2",
+        step: "7",
         image: image,
+        room: room,
       })
       .then((response) => {
         if (response.data) {
@@ -372,40 +388,85 @@ const Instance8 = () => {
 
   const onText4Click = useCallback(
     (name) => {
-      navigate(`/step/9/?image=${name}`);
-      console.log("Выбор №4");
+      navigate(`/step/9/?image=${name}&room=${room}`);
+      console.log("Выбор №7");
       console.log(name);
     },
     [navigate]
   );
 
   return (
-    <InstanceRoot>
-      <UnionFrameParent>
-      <Shape loading="lazy" alt="" src="/shape1.png"></Shape>
-        <UnionFrame>
-          <SortIcon>
-            <H>Какой нравится больше всего?</H>
-            <Photoarea>
-            <AImageIcon loading="lazy" alt="" src="/a-image-1@2x.png" onClick={onText4Click}></AImageIcon>
-            <AImageIcon loading="lazy" alt="" src="/a-image-1@2x.png" onClick={onText4Click}></AImageIcon>
-            </Photoarea>
-            <Photoarea>
-            <AImageIcon loading="lazy" alt="" src="/a-image-1@2x.png" onClick={onText4Click}></AImageIcon>
-            <AImageIcon loading="lazy" alt="" src="/a-image-1@2x.png" onClick={onText4Click}></AImageIcon>
-            </Photoarea>
-            <Button1 onClick={onText4Click}>
-            Никакой!
-          </Button1>
-          <AProgressBarChild loading="lazy" alt="" src="/progres7.png" />
-          </SortIcon>
-        </UnionFrame>
-        <Shape loading="lazy" alt="" src="/shape2.png"></Shape>
+    // <InstanceRoot>
+    //   <UnionFrameParent>
+    //   <Shape loading="lazy" alt="" src="/shape1.png"></Shape>
+    //     <UnionFrame>
+    //       <SortIcon>
+    //         <H>Какой нравится больше всего?</H>
+    //         <Photoarea>
+    //         <AImageIcon loading="lazy" alt="" src="/a-image-1@2x.png" onClick={onText4Click}></AImageIcon>
+    //         <AImageIcon loading="lazy" alt="" src="/a-image-1@2x.png" onClick={onText4Click}></AImageIcon>
+    //         </Photoarea>
+    //         <Photoarea>
+    //         <AImageIcon loading="lazy" alt="" src="/a-image-1@2x.png" onClick={onText4Click}></AImageIcon>
+    //         <AImageIcon loading="lazy" alt="" src="/a-image-1@2x.png" onClick={onText4Click}></AImageIcon>
+    //         </Photoarea>
+    //         <Button1 onClick={onText4Click}>
+    //         Никакой!
+    //       </Button1>
+    //       <AProgressBarChild loading="lazy" alt="" src="/progres7.png" />
+    //       </SortIcon>
+    //     </UnionFrame>
+    //     <Shape loading="lazy" alt="" src="/shape2.png"></Shape>
         
 
         
-      </UnionFrameParent>
-    </InstanceRoot>
+    //   </UnionFrameParent>
+    // </InstanceRoot>
+    <InstanceRoot>
+  <UnionFrameParent>
+    {/* Retain these shapes and their styling */}
+    <Shape loading="lazy" alt="" src="/shape1.png" />
+    <UnionFrame>
+      <SortIcon>
+        <H>Какой нравится больше всего?</H>
+
+        {/* Dynamically render photo areas based on your `images` data */}
+        {(!loading && images.length > 0) ? (
+          images.map((imageRow, rowIndex) => (
+            <Photoarea key={rowIndex}>
+              {imageRow.map((img, i) => (
+                <AImageIcon
+                  key={i}
+                  loading="lazy"
+                  alt={img.name || ""}
+                  src={img.image}
+                  onClick={() => onText4Click(img.name)}
+                />
+              ))}
+            </Photoarea>
+          ))
+        ) : (
+          // Handling loading and empty states:
+          loading ? (
+            <div>
+              Почти всё готово (ждём ответа домового). Закройте глаза на несколько секунд
+            </div>
+          ) : (
+            <div>No images</div>
+          )
+        )}
+
+        <Button1 onClick={refreshPage}>
+          Никакой!
+        </Button1>
+
+        {/* Progress bar can remain as is, just change the image if needed */}
+        <AProgressBarChild loading="lazy" alt="" src="/progres7.png" />
+      </SortIcon>
+    </UnionFrame>
+    <Shape loading="lazy" alt="" src="/shape2.png" />
+  </UnionFrameParent>
+</InstanceRoot>
   );
 };
 

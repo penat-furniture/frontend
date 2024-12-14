@@ -3,6 +3,7 @@ import OOfferItem from "./OOfferItem";
 import { useCallback, useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import api from "../utils/api";
+import React from 'react';
 import { split_by_chunks } from "../utils/helpers";
 import MultiRangeSlider from "./MultiRangeSlider";
 
@@ -251,15 +252,39 @@ const default_limits = {
     'min': 0,
     'max': 1e10,
   },
+  'commode': {
+    'min': 0,
+    'max': 1e10,
+  },
+  'carpet': {
+    'min': 0,
+    'max': 1e10,
+  },
+  'pouf': {
+    'min': 0,
+    'max': 1e10,
+  },
+  'light': {
+    'min': 0,
+    'max': 1e10,
+  }
 }
 
 const MainFooterFrame = () => {
+  const [showElement,setShowElement] = React.useState(true)
+  useEffect(()=>{
+    setTimeout(function() {
+      setShowElement(false)
+         }, 3000);
+       },
+   [])
   const [images, setImages] = useState({});
   const [total, setTotal] = useState(null);
   const [loading, setLoading] = useState(true);
   const [limits, setLimits] = useState(default_limits);
   const [limitsDump, setLimitsDump] = useState("");
   const image = new URLSearchParams(window.location.search).get("image");
+  const room = new URLSearchParams(window.location.search).get("room");
   // useEffect(() => {
   //   api.get("limits/").then((response) => {
   //     if (response.data) {
@@ -285,6 +310,7 @@ const MainFooterFrame = () => {
     api
       .post("suggest/", {
         step: "7",
+        room,
         image,
         limits,
       })
@@ -344,6 +370,7 @@ const MainFooterFrame = () => {
     <MainFooterFrameRoot>
       <RestartButton1>
         <CircleButtonInstance>
+        {showElement?<AImageIcon loading="lazy" alt="" src="/searchanim.gif"></AImageIcon>:<></>} 
           <TextYourRoom>
             <H>Ваша комната собрана!</H>
             {total !== null && <DivText>Суммарная стоимость комнаты: {total} руб.</DivText>}

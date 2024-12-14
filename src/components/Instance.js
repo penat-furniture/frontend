@@ -489,16 +489,35 @@ const Instance = () => {
     navigate("/saved/");
   }, [navigate]);
 
-  const onText4Click = useCallback(
+  const onText4ClickKitchen = useCallback(
     (name) => {
-      navigate(`/step/2/?image=${name}`);
+      navigate(`/step/2/?image=${name}&room=kitchen`);
       console.log("Выбор №1");
       console.log(name);
       // console.log(event.target.src);
     },
     [navigate]
-  )
-  ;
+  );
+
+  const onText4ClickLivingRoom = useCallback(
+    (name) => {
+      navigate(`/step/2/?image=${name}&room=living_room`);
+      console.log("Выбор №1");
+      console.log(name);
+      // console.log(event.target.src);
+    },
+    [navigate]
+  );
+
+  const onText4ClickBedroom = useCallback(
+    (name) => {
+      navigate(`/step/2/?image=${name}&room=bedroom`);
+      console.log("Выбор №1");
+      console.log(name);
+      // console.log(event.target.src);
+    },
+    [navigate]
+  );
 
   return (
     <InstanceRoot>
@@ -537,7 +556,7 @@ const Instance = () => {
         
         <Buttonarea>
           
-          <Button1 onClick={onText4Click}>
+          <Button1 onClick={onText4ClickKitchen}>
              Отлично, начнём!
           </Button1>
         </Buttonarea>
@@ -562,7 +581,7 @@ const Instance = () => {
         
         
         <Buttonarea>
-        <Button1 onClick={onText4Click}>
+        <Button1 onClick={onText4ClickLivingRoom}>
              Отлично, начнём!
           </Button1>
         </Buttonarea>
@@ -589,7 +608,7 @@ const Instance = () => {
         
         <Buttonarea>
           
-        <Button1 onClick={onText4Click}>
+        <Button1 onClick={onText4ClickBedroom}>
              Отлично, начнём!
           </Button1>
           </Buttonarea>

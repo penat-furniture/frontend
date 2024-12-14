@@ -50,8 +50,8 @@ const SortIcon = styled.div`
 const UnionFrame = styled.div`
   display: flex;
   flex-direction: row;
-  align-items: flex-start;
-  justify-content: flex-start;
+  align-items: сenter;
+  justify-content: center;
   width: 90%;
   box-sizing: border-box;
  
@@ -218,12 +218,22 @@ const AImageIcon = styled.img`
   }
 `;
 const Photoarea = styled.div`
-  width: 110%;
-  z-index: 9999;
-  display: flex;
-  gap: 20px;
+  align-self: stretch;
+  display: grid;
+  flex-direction: row;
+  align-items: flex-start;
+  justify-content: flex-start;
+  gap: 0px 21px;
+  grid-template-columns: repeat(2, minmax(223px, 1fr));
+  @media screen and (max-width: 1050px) {
+    justify-content: center;
+    grid-template-columns: repeat(2, minmax(223px, 386px));
+  }
   @media screen and (max-width: 450px) {
-    width: 90%;
+    // grid-template-columns: minmax(223px, 1fr);
+    justify-content: center;
+    grid-template-columns: repeat(2, minmax(23px, 450px));
+    gap: 10px 10px;
   }
 `;
 const Shape = styled.img`
@@ -331,13 +341,18 @@ const InstanceRoot = styled.section`
 const Instance6 = () => {
   const [images, setImages] = useState([]);
   const [loading, setLoading] = useState(true);
-  const split_by = 4;
+  const split_by = 2;
   const image = new URLSearchParams(window.location.search).get("image");
+  const room = new URLSearchParams(window.location.search).get("room");;
+  const refreshPage = ()=>{
+    window.location.reload();
+ }
   useEffect(() => {
     api
       .post("suggest/", {
         step: "5",
         image: image,
+        room: room,
       })
       .then((response) => {
         if (response.data) {
@@ -373,9 +388,9 @@ const Instance6 = () => {
 
   const onText4Click = useCallback(
     (name) => {
-      navigate(`/step/7/?image=${name}`);
+      navigate(`/step/7/?image=${name}&room=${room}`);
       // navigate(`/room/done/?image=${name}`);
-      console.log("Выбор №4");
+      console.log("Выбор №5");
       console.log(name);
     },
     [navigate]
@@ -442,12 +457,12 @@ const Instance6 = () => {
           )
         )}
 
-        <Button1 onClick={onText4Click}>
+        <Button1 onClick={refreshPage}>
           Никакой!
         </Button1>
 
         {/* Progress bar can remain as is, just change the image if needed */}
-        <AProgressBarChild loading="lazy" alt="" src="/progres1.png" />
+        <AProgressBarChild loading="lazy" alt="" src="/progres5.png" />
       </SortIcon>
     </UnionFrame>
     <Shape loading="lazy" alt="" src="/shape2.png" />
