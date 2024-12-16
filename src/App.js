@@ -7,6 +7,8 @@ import {
 } from "react-router-dom";
 import Frame from "./pages/Frame";
 import Frame1 from "./pages/Frame1";
+import Frame1Kitchen from "./pages/Frame1Kitchen";
+import Frame1Livingroom from "./pages/Frame1Livingroom";
 import Frame2 from "./pages/Frame2";
 import Frame3 from "./pages/Frame3";
 import Frame4 from "./pages/Frame4";
@@ -49,7 +51,15 @@ function App() {
         title = "";
         metaDescription = "";
         break;
-      case "/room/done/":
+      case "/room/done/bedroom":
+        title = "";
+        metaDescription = "";
+        break;
+      case "/room/done/kitchen":
+        title = "";
+        metaDescription = "";
+        break;
+      case "/room/done/livingroom":
         title = "";
         metaDescription = "";
         break;
@@ -166,7 +176,9 @@ function App() {
       <Route path="/step/9/" element={<Frame_step9 />} />
       <Route path="/step/10/" element={<Frame_step10 />} />
       <Route path="/step/11/" element={<Frame_step11 />} />
-      <Route path="/room/done/" element={<Frame1 />} />
+      <Route path="/room/done/bedroom" element={<Frame1 />} />
+      <Route path="/room/done/kitchen" element={<Frame1Kitchen />} />
+      <Route path="/room/done/livingroom" element={<Frame1Livingroom />} />
       <Route path="/terms-of-service/" element={<Frame9 />} />
       <Route path="/public-offer/" element={<Frame10 />} />
     </Routes>

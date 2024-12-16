@@ -204,17 +204,20 @@ const ProgressBarInstance = styled.div`
   }
 `;
 const AImageIcon = styled.img`
-  
-  
+border-top-right-radius: 60px;
+  border-bottom-left-radius: 60px;
   width: 90%;
   overflow: hidden;
-  
+  max-height: 150px;
   object-fit: contain;
   background-color: #ffffff;
   
   cursor: pointer;
   @media screen and (max-width: 450px) {
+    width: 100%;
     
+    border-top-right-radius: 40px;
+    border-bottom-left-radius: 40px;
   }
 `;
 const Photoarea = styled.div`
@@ -389,7 +392,9 @@ const Instance7 = () => {
   const onText4Click = useCallback(
     (name) => {
       // navigate(`/step/8/?image=${name}`);
-      navigate(`/room/done/?image=${name}&room=${room}`);
+      // navigate(`/room/done/?image=${name}&room=${room}`);
+      const roomLabel = room === 'living_room' ? 'livingroom' : room;
+      navigate(`/room/done/${roomLabel}?image=${name}&room=${room}`);
       console.log("Выбор №6");
       console.log(name);
     },
@@ -462,7 +467,7 @@ const Instance7 = () => {
         </Button1>
 
         {/* Progress bar can remain as is, just change the image if needed */}
-        <AProgressBarChild loading="lazy" alt="" src="/progres6.png" />
+        <AProgressBarChild loading="lazy" alt="" src="/progres7.png" />
       </SortIcon>
     </UnionFrame>
     <Shape loading="lazy" alt="" src="/shape2.png" />

@@ -204,17 +204,20 @@ const ProgressBarInstance = styled.div`
   }
 `;
 const AImageIcon = styled.img`
-  
-  
+border-top-right-radius: 60px;
+  border-bottom-left-radius: 60px;
   width: 90%;
   overflow: hidden;
-  
+  max-height: 150px;
   object-fit: contain;
   background-color: #ffffff;
   
   cursor: pointer;
   @media screen and (max-width: 450px) {
+    width: 100%;
     
+    border-top-right-radius: 40px;
+    border-bottom-left-radius: 40px;
   }
 `;
 const Photoarea = styled.div`

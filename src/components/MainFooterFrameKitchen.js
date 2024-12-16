@@ -274,7 +274,7 @@ const default_limits = {
   }
 }
 
-const MainFooterFrame = () => {
+const MainFooterFrameKitchen = () => {
   const [showElement,setShowElement] = React.useState(true)
   useEffect(()=>{
     setTimeout(function() {
@@ -300,12 +300,10 @@ const MainFooterFrame = () => {
   useEffect(() => {
     console.log({ limits });
     if (
-      !limits?.bed ||
-      !limits?.commode ||
-      !limits?.carpet ||
-      !limits?.closet ||
+      !limits?.table ||
+      !limits?.chair ||
       !limits?.light ||
-      !limits?.plant
+      !limits?.plant 
     ) {
       return;
     }
@@ -390,27 +388,15 @@ const MainFooterFrame = () => {
           {!loading && Object.keys(images).length > 0 && (
             <TOfferSet>
               <OOfferItem
-                prop="Кровать"
-                propId="bed"
-                aImage={images?.bed}
+                prop="Cтол"
+                propId="table"
+                aImage={images?.table}
                 onMinMaxUpdate={onMinMaxUpdate}
               />
               <OOfferItem
-                prop="Тумбочка"
-                propId="commode"
-                aImage={images?.commode}
-                onMinMaxUpdate={onMinMaxUpdate}
-              />
-              <OOfferItem
-                prop="Ковер"
-                propId="carpet"
-                aImage={images?.carpet}
-                onMinMaxUpdate={onMinMaxUpdate}
-              />
-              <OOfferItem
-                prop="Шкаф"
-                propId="closet"
-                aImage={images?.closet}
+                prop="Стул"
+                propId="chair"
+                aImage={images?.chair}
                 onMinMaxUpdate={onMinMaxUpdate}
               />
               <OOfferItem
@@ -425,6 +411,7 @@ const MainFooterFrame = () => {
                 aImage={images?.plant}
                 onMinMaxUpdate={onMinMaxUpdate}
               />
+              
             </TOfferSet>
             
             
@@ -445,4 +432,4 @@ const MainFooterFrame = () => {
   );
 };
 
-export default MainFooterFrame;
+export default MainFooterFrameKitchen;

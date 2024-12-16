@@ -204,17 +204,20 @@ const ProgressBarInstance = styled.div`
   }
 `;
 const AImageIcon = styled.img`
-  
-  
+border-top-right-radius: 60px;
+  border-bottom-left-radius: 60px;
   width: 90%;
   overflow: hidden;
-  
+  max-height: 150px;
   object-fit: contain;
   background-color: #ffffff;
   
   cursor: pointer;
   @media screen and (max-width: 450px) {
+    width: 100%;
     
+    border-top-right-radius: 40px;
+    border-bottom-left-radius: 40px;
   }
 `;
 const Photoarea = styled.div`
@@ -461,7 +464,7 @@ const Instance10 = () => {
         </Button1>
 
         {/* Progress bar can remain as is, just change the image if needed */}
-        <AProgressBarChild loading="lazy" alt="" src="/progres9.png" />
+        <AProgressBarChild loading="lazy" alt="" src="/progres10.png" />
       </SortIcon>
     </UnionFrame>
     <Shape loading="lazy" alt="" src="/shape2.png" />

@@ -274,7 +274,7 @@ const default_limits = {
   }
 }
 
-const MainFooterFrame = () => {
+const MainFooterFrameLivingroom = () => {
   const [showElement,setShowElement] = React.useState(true)
   useEffect(()=>{
     setTimeout(function() {
@@ -300,11 +300,12 @@ const MainFooterFrame = () => {
   useEffect(() => {
     console.log({ limits });
     if (
-      !limits?.bed ||
-      !limits?.commode ||
+      !limits?.table ||
+      !limits?.chair ||
       !limits?.carpet ||
-      !limits?.closet ||
       !limits?.light ||
+      !limits?.pouf ||
+      !limits?.closet ||
       !limits?.plant
     ) {
       return;
@@ -390,15 +391,15 @@ const MainFooterFrame = () => {
           {!loading && Object.keys(images).length > 0 && (
             <TOfferSet>
               <OOfferItem
-                prop="Кровать"
-                propId="bed"
-                aImage={images?.bed}
+                prop="Cтол"
+                propId="table"
+                aImage={images?.table}
                 onMinMaxUpdate={onMinMaxUpdate}
               />
               <OOfferItem
-                prop="Тумбочка"
-                propId="commode"
-                aImage={images?.commode}
+                prop="Стул"
+                propId="chair"
+                aImage={images?.chair}
                 onMinMaxUpdate={onMinMaxUpdate}
               />
               <OOfferItem
@@ -408,15 +409,21 @@ const MainFooterFrame = () => {
                 onMinMaxUpdate={onMinMaxUpdate}
               />
               <OOfferItem
-                prop="Шкаф"
-                propId="closet"
-                aImage={images?.closet}
-                onMinMaxUpdate={onMinMaxUpdate}
-              />
-              <OOfferItem
                 prop="Свет"
                 propId="light"
                 aImage={images?.light}
+                onMinMaxUpdate={onMinMaxUpdate}
+              />
+              <OOfferItem
+                prop="Пуфик"
+                propId="pouf"
+                aImage={images?.pouf}
+                onMinMaxUpdate={onMinMaxUpdate}
+              />
+              <OOfferItem
+                prop="Шкаф"
+                propId="closet"
+                aImage={images?.closet}
                 onMinMaxUpdate={onMinMaxUpdate}
               />
               <OOfferItem
@@ -425,6 +432,7 @@ const MainFooterFrame = () => {
                 aImage={images?.plant}
                 onMinMaxUpdate={onMinMaxUpdate}
               />
+              
             </TOfferSet>
             
             
@@ -445,4 +453,4 @@ const MainFooterFrame = () => {
   );
 };
 
-export default MainFooterFrame;
+export default MainFooterFrameLivingroom;
